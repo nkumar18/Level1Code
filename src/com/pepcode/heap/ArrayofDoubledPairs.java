@@ -23,7 +23,10 @@ public class ArrayofDoubledPairs {
 
 
         for(int val:arr){
-            if(val != 0 && map.containsKey(val) && map.containsKey(2*val)){
+            if(val==0){
+                continue;
+            }
+            if(map.containsKey(val) && map.containsKey(2*val)){
               //val key liye jiski freq 1 se jyada h
                 if(map.getOrDefault(val,0) > 1){
                   map.put(val, map.getOrDefault(val,0)-1);
