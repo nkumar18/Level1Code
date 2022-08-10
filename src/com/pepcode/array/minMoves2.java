@@ -29,5 +29,4 @@ public class minMoves2 {
         return move;
     }
 
-    }
 }
