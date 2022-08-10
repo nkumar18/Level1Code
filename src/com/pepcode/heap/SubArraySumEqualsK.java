@@ -1,5 +1,6 @@
 package com.pepcode.heap;
 /*
+prefix sum strategy sum-k k0 count karo to k sum mil jayega
 Count of subArray in array whose sum equals k
 560. Subarray Sum Equals K
 https://leetcode.com/problems/subarray-sum-equals-k/
@@ -13,24 +14,27 @@ public class SubArraySumEqualsK {
        System.out.println(ans);
     }
     private static int subarraySum(int[] nums, int k) {
-        int ans=0;
+        int count=0;
         int sum=0;
         HashMap<Integer,Integer> hm = new HashMap<>();
-        hm.put(0,1);
+         hm.put(0,1);
         for(int val : nums){
+            //calcutate sum at each number
             sum+=val;
             if(hm.containsKey(sum-k)){
                 int x= hm.get(sum-k);
-                ans+=x;
+                count+=x;
             }
-            if(hm.containsKey(sum)){
+            //store sum ki freq in map
+            hm.put(sum,hm.getOrDefault(sum,0)+1);
+            /*if(hm.containsKey(sum)){
                 int x= hm.get(sum);
                 hm.put(sum,x+1);
             }else{
                 hm.put(sum,1);
-            }
+            }*/
         }
-        return ans;
+        return count;
 
     }
 }
