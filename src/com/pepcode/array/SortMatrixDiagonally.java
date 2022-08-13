@@ -1,5 +1,8 @@
 package com.pepcode.array;
-
+/*
+Time complexity mn (log(min(m,n))
+diagonal ki length m or n m jo chota hota h
+ */
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
