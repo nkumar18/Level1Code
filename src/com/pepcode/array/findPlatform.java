@@ -1,7 +1,9 @@
 package com.pepcode.array;
 
 import java.util.Arrays;
-
+/*
+https://practice.geeksforgeeks.org/problems/minimum-platforms-1587115620/1
+ */
 public class findPlatform {
     static int findPlatform(int arr[], int dep[], int n)
     {
