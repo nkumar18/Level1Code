@@ -149,6 +149,56 @@ public class dpset {
         return mazepath_tab(0,0,n-1,m-1,dp,dir,obstacleGrid);
     }
     //End=========================
+    /*
+    https://leetcode.com/problems/climbing-stairs/submissions/
+    Solution 1 starts======
+     */
+    public int climbStairs(int n) {
+        int[] dp= new int[n+1];
+
+        dp[0]=1;
+        dp[1]=1;
+        for(int i=2; i<= n; i++){
+
+            dp[i] = dp[i-1] + dp[i-2];
+
+        }
+        return dp[n];
+
+    }
+    //Solution 2 starts======
+    public int climbStairs_rec(int n) {
+        int a=1,b=1;
+        for(int i=2; i<= n; i++){
+
+            int sum= a+b;
+                a=b;
+                b=sum;
+
+        }
+        return b;
+
+    }
+    /*
+    Min Cost Climbing Stairs Leetcode 746
+     */
+    public int minCostClimbingStairs(int[] cost) {
+        int N=cost.length;
+        int[] dp= new int[N];//0 to 9
+        for(int n=0;n<N;n++){
+            if(n<=1){
+                //0 and 1 index
+                dp[n]=cost[n];
+                continue;
+            }
+
+            int ans= Math.min(dp[n-1],dp[n-2]) + cost[n];
+            dp[n]=ans;
+        }
+       return Math.min(dp[N-1],dp[N-2]);
+    }
+
+
     public static void main(String[] args) {
         displayFibo();
 
