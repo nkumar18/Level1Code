@@ -1,5 +1,7 @@
 package com.pepcode.dp;
 
+import java.util.Arrays;
+
 public class dpset {
     //display
     public static void  display(int [] dp){
@@ -197,6 +199,96 @@ public class dpset {
         }
        return Math.min(dp[N-1],dp[N-2]);
     }
+    //Leetcode 91 numdecoding 1
+    public int numDecodings(String s) {
+        int[] dp= new int[s.length()+1];
+        Arrays.fill(dp,-1);
+        int ans=numDecodings(s,0,dp);
+        return ans;
+    }
+    public int numDecodings(String s,int idx,int dp[]) {
+        //base case at dp[array.length]=1
+        if (idx == s.length()) {
+            return dp[idx] = 1;
+        }
+        if (dp[idx] != -1)
+            return dp[idx];
+        //for ch1 single coming 1 to 9
+        char ch1 = s.charAt(idx);
+        if (ch1 == '0') {
+            return 0;
+        }
+        int count = 0;
+        count += numDecodings(s, idx + 1, dp);
+        //for ch2  coming with pair 10 to 26
+
+        if (idx < s.length() - 1) {
+            char ch2 = s.charAt(idx + 1);
+            //calculate  num ex-'23'= (2-'0')*10 +('3'-0)
+            int num = (ch1 - '0') * 10 + (ch2 - '0');
+            if (num <= 26) {
+                count += numDecodings(s, idx + 2, dp);
+            }
+        }
+        return dp[idx]=count;
+    }
+    //Leetcode 631
+    public int numDecodings_2(String s) {
+        long[] dp = new long[s.length() + 1];
+        Arrays.fill(dp, -1);
+        long ans = numDecodings_memo(s, 0, dp);
+        return (int) ans;
+    }
+
+    long numDecodings_memo(String s, int idx, long[] dp) {
+        long mod = (int) 1e9 + 7;
+        int n=s.length();
+        if (idx == n) {
+            return dp[idx] = 1;
+        }
+
+        if (dp[idx] != -1)
+            return dp[idx];
+
+        char ch= s.charAt(idx);
+
+        if (ch== '0') {
+            return dp[idx]=0;
+        }
+
+        long count = 0;
+        if (ch == '*') {
+            count = (count + 9 * numDecodings_memo(s, idx + 1, dp)) % mod;
+            if (idx < n- 1) {
+                char ch1 = s.charAt(idx + 1);
+                if(ch1>='0' && ch1<='6')
+                    count=(count+ 2*numDecodings_memo(s, idx + 2, dp)) % mod;
+                else if(ch1>='7' && ch1<='9')
+                    count=(count+ 1*numDecodings_memo(s, idx + 2, dp)) % mod;
+                else{
+                    count=(count+ 15*numDecodings_memo(s, idx + 2, dp)) % mod;
+                }
+
+            }
+        } else {
+            count+= 1*numDecodings_memo(s, idx + 1, dp) % mod;
+            if(idx< n-1){
+                char ch1 = s.charAt(idx + 1);
+                if(ch1=='*' && ch=='1')
+                    count=(count+ 9*numDecodings_memo(s, idx + 2, dp)) % mod;
+                else if(ch1=='*' && ch=='2')
+                    count=(count+ 6*numDecodings_memo(s, idx + 2, dp)) % mod;
+                else if (ch1!='*'){
+                    int num=(ch-'0')*10 +(ch1-'0');
+                    if(num<= 26)
+                        count=(count+ 1*numDecodings_memo(s, idx + 2, dp))%mod;
+                }
+            }
+        }
+
+        return dp[idx] = count;
+    }
+
 
 
     public static void main(String[] args) {
