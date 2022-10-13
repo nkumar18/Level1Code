@@ -288,12 +288,73 @@ public class dpset {
 
         return dp[idx] = count;
     }
+    //Path with Maximum Gold allowed 3 dir right , right up, right down
+    public static int getMaximumGold(int [][] arr) {
 
 
+        int m=arr.length;int n=arr[0].length;
+        int[][] dp= new int[m][n];
+        int [][] dir={{0,1},{1,1},{-1,1}};
+        for(int[] d : dp){
+            Arrays.fill(d,-1);
+        }
+        int maxGold=0;
+        for(int r=0;r<m;r++){
+            maxGold=Math.max(maxGold,goldmine(arr,r,0,dp,dir));
+        }
+        System.out.println(maxGold);
+        return maxGold;
+
+    }
+    private static int goldmine(int [][] arr,int sr,int sc,int[][]dp,int[][] dir) {
+        int maxGold = 0;
+        int m = arr.length;
+        int n = arr[0].length;
+        //last column
+        if (sc == n-1) {
+            return dp[sr][sc] = arr[sr][sc];
+        }
+        if (dp[sr][sc] != -1) {
+            return dp[sr][sc];
+        }
+        //for dir
+        for (int[] d : dir) {
+            int r = sr + d[0];
+            int c = sc + d[1];
+
+            if (r >= 0 && c >= 0 && r < m && c < n) {
+                maxGold = Math.max(maxGold, goldmine(arr, r, c, dp, dir) + arr[sr][sc]);
+
+            }
+        }
+        return dp[sr][sc] = maxGold;
+    }
+    //Count number of ways to partition a set into k subsets
+    //https://www.geeksforgeeks.org/count-number-of-ways-to-partition-a-set-into-k-subsets/?ref=lbp
+
+    public static int DivideNinKGroup(int n,int k,int[][]dp){
+        if(n==k ||k==1){
+            return dp[n][k]=1;
+        }
+        if(dp[n][k]!=0){
+            return dp[n][k];
+        }
+        int selfgroup=DivideNinKGroup(n-1,k-1,dp);
+        int partofFroup=DivideNinKGroup(n-1,k,dp)*k;
+        int ans=selfgroup+partofFroup;
+        return dp[n][k]=ans;
+    }
+    public static void dividentokgroup(){
+        int n=5;
+        int k=3;
+        int[][] dp= new int[n+1][k+1];
+        System.out.print(DivideNinKGroup(n,k,dp));
+    }
 
     public static void main(String[] args) {
-        displayFibo();
-
-
+      //  displayFibo();
+        int[][] arr={{10, 33, 13, 15}, {22, 21, 04, 1}, {5, 0, 2, 3}, {0, 6, 14, 2}};
+      //  getMaximumGold(arr);
+        dividentokgroup();
     }
 }
