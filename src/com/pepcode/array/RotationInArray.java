@@ -33,6 +33,12 @@ public class RotationInArray {
 
     }
     public static void main(String[] args) {
+    int[] nums = {1,2,3,4,5,6,7};
+        RotationInArray rotationInArray= new RotationInArray();
+        rotationInArray.rotate(nums,3);
 
+        for(int ele:nums){
+            System.out.print(ele + ",");
+        }
     }
 }
